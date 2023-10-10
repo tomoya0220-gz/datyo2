@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2023-10-09
+  time_slot: MyString
+  number_of_people: 1
+  note: MyText
+
+two:
+  date: 2023-10-09
+  time_slot: MyString
+  number_of_people: 1
+  note: MyText

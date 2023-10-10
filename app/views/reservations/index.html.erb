@@ -1,0 +1,33 @@
+<h1>予約カレンダー</h1>
+
+<table class="calendar">
+    <thead>
+        <tr>
+            <th>日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <% @dates.each do |date| %>
+                <% if date == @dates.first %>
+                    <% date.wday.times do %>
+                        <td></td>
+                    <% end %>
+                <% end %>
+
+                <td><%= link_to date.day, show_reservation_path(date) %></td>
+                
+                <% if date.wday == 6 %>
+                    </tr>
+                    <tr>
+                <% end %>
+            <% end %>
+        </tr>
+    </tbody>
+</table>

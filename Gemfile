@@ -48,6 +48,7 @@ gem "bootsnap", require: false
 gem 'mysql2'
 gem 'devise'
 gem 'dotenv-rails'
+gem 'omniauth-line'
 # gem 'webpacker'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]

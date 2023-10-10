@@ -1,0 +1,21 @@
+<h2>Reservations for <%= @date.strftime("%Y-%m-%d") %></h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Time Slot</th>
+            <th>Reservation Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @time_slots.each do |slot| %>
+            <tr>
+                <td><%= slot %></td>
+                <td>
+                    <% count = @reservations[slot] || 0 %>
+                    <%= reservation_status_symbol(count) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

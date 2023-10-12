@@ -23,6 +23,6 @@ class ReservationsController < ApplicationController
         @reservation.name = current_user.name
         @reservation.email = current_user.email
         @reservation.phone_number = current_user.phone_number
-        
+        end        
     end
 end

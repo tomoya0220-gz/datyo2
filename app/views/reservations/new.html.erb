@@ -1,0 +1,16 @@
+<h3>予約確認</h3>
+
+<p>希望日時: <%= @reservation.date.strftime("%Y年%m月%d日 %H時%M分") %></p>
+
+<!-- その他の情報も表示... -->
+
+<%= form_for @reservation, url: reservations_path do |f| %>
+    <!-- hidden_fieldを使ってデータを次のアクションへ渡す -->
+    <%= f.hidden_field :date %>
+
+    <!-- その他の必要なhidden_field... -->
+
+    <%= link_to "LINEでログイン", "/auth/line" %>
+
+    <%= f.submit "予約確定", class: "btn btn-primary" %>
+<% end %>

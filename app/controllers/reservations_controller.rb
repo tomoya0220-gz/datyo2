@@ -18,11 +18,12 @@ class ReservationsController < ApplicationController
 
     def new
         #予約を確定させていく画面
-        @reservation = Reservation.new(reservation_params)
+        @reservation = Reservation.new
         if user_signed_in?
         @reservation.name = current_user.name
         @reservation.email = current_user.email
         @reservation.phone_number = current_user.phone_number
         end        
     end
+
 end

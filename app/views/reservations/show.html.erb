@@ -16,7 +16,7 @@
                     <% status = reservation_status_symbol(count) %>
                     <%= status%>
                     <% if status == "⚪︎" || status == "△" %>
-                        <%= button_to "予約へ", new_reservation_path, method: :post %>
+                        <%= button_to "予約へ", new_reservation_path(date: @date, time_slot: slot), method: :get %>
                     <% end %>
                     
                 </td>

@@ -6,5 +6,8 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[line]
   
   has_many :reservations, dependent: :destroy
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :phone_number, presence: true
   
 end

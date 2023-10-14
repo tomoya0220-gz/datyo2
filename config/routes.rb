@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   get 'reservations/show/:date', to:'reservations#show', as:'show_reservation'
 
-  post 'reservations/new/:date', to:'reservations#new', as:'new_reservation'
+  get 'reservations/new/:date', to:'reservations#new', as:'new_reservation'
+  post 'reservations/new/:date', to: 'reservations#create', as: 'create_reservation'
 
   get '/auth/:provider/callback', to: 'sessions#create', as:'create_session'
   # Defines the root path route ("/")

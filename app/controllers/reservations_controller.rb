@@ -34,6 +34,12 @@ class ReservationsController < ApplicationController
 
     def create
         @reservation = Reservation.new(reservation_params)
+        @reservation.time_slot =
+        @reservation.number_of_people =
+        @reservation.note = 
+        @reservation.name = current_user.name
+        @reservation.email = current_user.email
+        @reservation.phone_number = current_user.phone_number
 
         if @reservation.save
             flash[:notice] = '予約が完了しました。'

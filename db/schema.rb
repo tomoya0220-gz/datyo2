@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_050029) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_123011) do
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
     t.date "date"
     t.string "time_slot"
-    t.integer "number_of_people"
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.integer "adults"
+    t.integer "children"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 

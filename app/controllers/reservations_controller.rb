@@ -13,34 +13,28 @@ class ReservationsController < ApplicationController
         #日にち詳細画面に遷移して予約状況を示す
         @date = Date.parse(params[:date])
         @time_slots = (18..20).flat_map { |hour| ["#{hour}:00", "#{hour}:30"] }
-        @reservations = Reservation.where(date: @date).group(:time_slot).sum(:number_of_people)
+        @reservations = Reservation.where(date: @date).group(:time_slot).sum(:adults)
     end
 
     def new
         #予約を確定させていく画面
-        @reservations = Reservation.new
-        @reservations.date = params[:date]
-        @reservations.time_slot = params[:time_slot]
+        @reservation = Reservation.new
+        @reservation.date = params[:date]
+        @reservation.time_slot = params[:time_slot]
         if user_signed_in?
-            @reservations.user = current_user
+            @reservation.user = current_user
             # LINEでログインしている場合
             if current_user.provider == 'line'
-                @reservations.name = current_user.line_name
-                @reservations.email = current_user.line_email
-                @reservations.phone_number = current_user.line_phone_number                
+                @reservation.name = current_user.line_name
+                @reservation.email = current_user.line_email
+                @reservation.phone_number = current_user.line_phone_number                
             end    
         end        
     end
 
     def create
         @reservation = Reservation.new(reservation_params)
-        @reservation.time_slot =
-        @reservation.number_of_people =
-        @reservation.note = 
-        @reservation.name = current_user.name
-        @reservation.email = current_user.email
-        @reservation.phone_number = current_user.phone_number
-
+        
         if @reservation.save
             flash[:notice] = '予約が完了しました。'
             redirect_to index_reservation_path 

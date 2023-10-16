@@ -24,6 +24,21 @@
             <%= f.hidden_field :time_slot %>
         </div>
 
+        <div class="form-group">
+            <label for="reservation_adults">大人の人数:</label>
+            <%= f.select :adults, options_for_select((1..10).to_a), {}, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+            <label for="reservation_children">子供の人数:</label>
+            <%= f.select :children, options_for_select((0..10).to_a), {}, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+            <label for="reservation_note">備考:</label>
+            <%= f.text_area :note, class: 'form-control', placeholder: '要望などがあれば入力してください', rows: 5 %>
+        </div>
+
         <div class="actions">
             <%= f.submit '予約する', class: 'btn btn-primary' %>
         </div>

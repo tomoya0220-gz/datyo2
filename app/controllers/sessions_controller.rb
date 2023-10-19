@@ -4,4 +4,5 @@ class SessionsController < ApplicationController
         # authからユーザー情報を取得して、セッションやデータベースに保存
         redirect_to new_reservation_path
     end
+    
 end

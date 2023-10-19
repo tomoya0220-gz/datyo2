@@ -35,6 +35,12 @@ class ReservationsController < ApplicationController
     def create
         @reservation = Reservation.new(reservation_params)
         
+        if current_user.guest? && (current_user.name.blank? || current_user.email.blank? || current_user.phone_number.blank?)
+            flash[:alert] = "名前、メールアドレス、電話番号を正しく入力してください。"
+            render :new
+            return
+        end
+
         if @reservation.save
             flash[:notice] = '予約が完了しました。'
             redirect_to index_reservation_path 
@@ -44,9 +50,12 @@ class ReservationsController < ApplicationController
         end
     end
 
+    def confirm
+        @reservation = Reservation.find(params[:id])
+    end
     private
 
     def reservation_params
-        params.require(:reservation).permit(:date, :time_slot, :number_of_people, :note, :name, :email, :phone_number)
+        params.require(:reservation).permit(:date, :time_slot, :adults, :children, :note)
     end
 end

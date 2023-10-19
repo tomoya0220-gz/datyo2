@@ -6,8 +6,16 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[line]
   
   has_many :reservations, dependent: :destroy
-  validates :name, presence: true
-  validates :email, presence: true
-  validates :phone_number, presence: true
+
+  validates :name, presence: true, unless: :guest_user?
+  validates :email, presence: true, unless: :guest_user?
+  validates :phone_number, presence: true, unless: :guest_user?
   
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = ''
+      user.phone_number = ''
+    end
+  end
 end

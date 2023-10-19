@@ -1,12 +1,21 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in' , as: 'users_guest_sign_in'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  
   get '/', to:'reservations#index', as:'index_reservation'
 
   get 'reservations/show/:date', to:'reservations#show', as:'show_reservation'
 
-  get 'reservations/new/:date', to:'reservations#new', as:'new_reservation'
-  post 'reservations/new/:date', to: 'reservations#create', as: 'create_reservation'
+  get 'reservations/new/:date/:time_slot', to:'reservations#new', as:'new_reservation'
+  post 'reservations/new/:date/:time_slot', to: 'reservations#create', as: 'create_reservation'
+
+  get 'reservations/confirm', to:'reservations#confirm', as:'confirm_reservation'
 
   get '/auth/:provider/callback', to: 'sessions#create', as:'create_session'
   # Defines the root path route ("/")

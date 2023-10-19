@@ -29,6 +29,15 @@
                 <% end %>
             <% end %>
         </tr>
-        <%= link_to "予約の確認", confirm_reservation_path(reservation) %>
+        <% @reservations.each do |reservation| %>
+            <tr>
+                <td colspan="7">
+                    <%= link_to "予約の確認", confirm_reservation_path(reservation) %>
+                </td>
+            </tr>
+        <% end %>
     </tbody>
 </table>
+<% if user_signed_in? %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<% end %>

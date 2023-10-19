@@ -1,52 +1,46 @@
 <h1>新規予約</h1>
+<%= form_with model: @reservation, url: create_reservation_path ,local: true do |f| %>
+    <div class="form-group">
+        <label for="reservation_name">名前:</label>
+        <%= f.text_field :name, value: user_signed_in? ? current_user.name : '', class: 'form-control', placeholder: '名前を入力してください', required: true %>
+    </div>
 
-<% if user_signed_in? %>
-    <%= form_with model: @reservation, url: create_reservation_path ,local: true do |f| %>
-        <div class="form-group">
-            <label for="reservation_name">名前:</label>
-            <%= f.text_field :name, value: user_signed_in? ? current_user.name : '', class: 'form-control', placeholder: '名前を入力してください', required: true %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_email">メールアドレス:</label>
+        <%= f.email_field :email, value: user_signed_in? ? current_user.email : '', class: 'form-control', placeholder: 'メールアドレスを入力してください', required: true %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_email">メールアドレス:</label>
-            <%= f.email_field :email, value: user_signed_in? ? current_user.email : '', class: 'form-control', placeholder: 'メールアドレスを入力してください', required: true %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_phone_number">電話番号:</label>
+        <%= f.telephone_field :phone_number, value: user_signed_in? ? current_user.phone_number : '', class: 'form-control', placeholder: '電話番号を入力してください', required: true %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_phone_number">電話番号:</label>
-            <%= f.telephone_field :phone_number, value: user_signed_in? ? current_user.phone_number : '', class: 'form-control', placeholder: '電話番号を入力してください', required: true %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_date">希望日時:</label>
+        <p>
+        <%= @reservation.date.strftime("%Y年%m月%d日") %> 
+        <%= @reservation.time_slot %> 
+        </p>
+        <%= f.hidden_field :date %>
+        <%= f.hidden_field :time_slot %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_date">希望日時:</label>
-            <p>
-            <%= @reservation.date.strftime("%Y年%m月%d日") %> 
-            <%= @reservation.time_slot %> 
-            </p>
-            <%= f.hidden_field :date %>
-            <%= f.hidden_field :time_slot %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_adults">大人の人数:</label>
+        <%= f.select :adults, options_for_select((1..10).to_a), {}, class: 'form-control' %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_adults">大人の人数:</label>
-            <%= f.select :adults, options_for_select((1..10).to_a), {}, class: 'form-control' %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_children">子供の人数:</label>
+        <%= f.select :children, options_for_select((0..10).to_a), {}, class: 'form-control' %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_children">子供の人数:</label>
-            <%= f.select :children, options_for_select((0..10).to_a), {}, class: 'form-control' %>
-        </div>
+    <div class="form-group">
+        <label for="reservation_note">備考:</label>
+        <%= f.text_area :note, class: 'form-control', placeholder: '要望などがあれば入力してください', rows: 5 %>
+    </div>
 
-        <div class="form-group">
-            <label for="reservation_note">備考:</label>
-            <%= f.text_area :note, class: 'form-control', placeholder: '要望などがあれば入力してください', rows: 5 %>
-        </div>
-
-        <div class="actions">
-            <%= f.submit '予約する', class: 'btn btn-primary' %>
-        </div>
-    <% end %>
-<% else %>
-    <p>ログインしてください:</p>
-    <%= link_to "LINEでログイン", "/auth/line", class: "btn btn-success" %>
+    <div class="actions">
+        <%= f.submit '予約する', class: 'btn btn-primary' %>
+    </div>
 <% end %>

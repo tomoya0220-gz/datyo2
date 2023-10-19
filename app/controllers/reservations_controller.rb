@@ -7,6 +7,7 @@ class ReservationsController < ApplicationController
         @start_date = Date.today
         @end_date = @start_date + 1.month
         @dates = (@start_date..@end_date).to_a
+        @reservations = current_user.reservations
     end
 
     def show
@@ -23,25 +24,24 @@ class ReservationsController < ApplicationController
         @reservation.time_slot = params[:time_slot]
         if user_signed_in?
             @reservation.user = current_user
-            # LINEでログインしている場合
-            if current_user.provider == 'line'
-                @reservation.name = current_user.line_name
-                @reservation.email = current_user.line_email
-                @reservation.phone_number = current_user.line_phone_number                
-            end    
         end        
     end
 
     def create
-        @reservation = Reservation.new(reservation_params)
+        @reservation = Reservation.new(reservation_params.except(:name, :email, :phone_number))
+
+        temp_name = reservation_params[:name]
+        temp_email = reservation_params[:email]
+        temp_phone_number = reservation_params[:phone_number]
         
-        if current_user.guest? && (current_user.name.blank? || current_user.email.blank? || current_user.phone_number.blank?)
+        if current_user.guest? && (temp_name.blank? || temp_email.blank? || temp_phone_number.blank?)
             flash[:alert] = "名前、メールアドレス、電話番号を正しく入力してください。"
             render :new
             return
         end
 
         if @reservation.save
+            current_user.update(name: temp_name, email: temp_email, phone_number: temp_phone_number)
             flash[:notice] = '予約が完了しました。'
             redirect_to index_reservation_path 
         else
@@ -51,7 +51,7 @@ class ReservationsController < ApplicationController
     end
 
     def confirm
-        @reservation = Reservation.find(params[:id])
+        @reservations = current_user.reservations
     end
     private
 

@@ -29,13 +29,13 @@
                 <% end %>
             <% end %>
         </tr>
-        <% @reservations.each do |reservation| %>
-            <tr>
-                <td colspan="7">
-                    <%= link_to "予約の確認", confirm_reservation_path(reservation) %>
-                </td>
-            </tr>
-        <% end %>
+        
+        <tr>
+            <td colspan="7">
+                <%= link_to "予約の確認", confirm_reservation_path %>
+            </td>
+        </tr>
+        
     </tbody>
 </table>
 <% if user_signed_in? %>

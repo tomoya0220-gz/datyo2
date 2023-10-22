@@ -7,9 +7,9 @@ class User < ApplicationRecord
   
   has_many :reservations, dependent: :destroy
 
-  validates :name, presence: true, unless: :guest_user?
-  validates :email, presence: true, unless: :guest_user?
-  validates :phone_number, presence: true, unless: :guest_user?
+  validates :name, presence: true, unless: :guest?
+  validates :email, presence: true, unless: :guest?
+  validates :phone_number, presence: true, unless: :guest?
   
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|

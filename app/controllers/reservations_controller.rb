@@ -28,19 +28,20 @@ class ReservationsController < ApplicationController
     end
 
     def create
-    
-        @reservation = Reservation.new(reservation_params)
-        
+
+        @reservation = Reservation.new(date: params[:date], time_slot: params[:time_slot], adults: params[:adults], children: params[:children], note: params[:note])
+
         temp_name = params[:reservation][:name]
         temp_email = params[:reservation][:email]
         temp_phone_number = params[:reservation][:phone_number]
+        @reservation.user = current_user
         
         if current_user.guest? && (temp_name.blank? || temp_email.blank? || temp_phone_number.blank?)
             flash[:alert] = "名前、メールアドレス、電話番号を正しく入力してください。"
             render :new
             return
-        end
-        
+        end        
+
         if @reservation.save
             current_user.update(name: temp_name, email: temp_email, phone_number: temp_phone_number) unless current_user.guest?
             flash[:notice] = '予約が完了しました。'
@@ -53,11 +54,18 @@ class ReservationsController < ApplicationController
     end
 
     def confirm
-        @reservations = current_user.reservations
-    end
-    private
+        @reservations = current_user.reservations.where('date >= ?', Date.today)        
 
-    def reservation_params
-        params.require(:reservation).permit(:date, :time_slot, :adults, :children, :note)
+        unless @reservations
+            flash[:alert] = "予約が見つかりませんでした。"
+            redirect_to index_reservation_path and return
+        end
+        render :confirm
     end
+
+    private
+    def reservation_params
+        params.require(:reservation).permit(:date, :time_slot, :adults, :children, :note, :name, :email, :phone_number)
+    end
+    
 end

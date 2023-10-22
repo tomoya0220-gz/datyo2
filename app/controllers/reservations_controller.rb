@@ -28,26 +28,28 @@ class ReservationsController < ApplicationController
     end
 
     def create
-        @reservation = Reservation.new(reservation_params.except(:name, :email, :phone_number))
-
-        temp_name = reservation_params[:name]
-        temp_email = reservation_params[:email]
-        temp_phone_number = reservation_params[:phone_number]
+    
+        @reservation = Reservation.new(reservation_params)
+        
+        temp_name = params[:reservation][:name]
+        temp_email = params[:reservation][:email]
+        temp_phone_number = params[:reservation][:phone_number]
         
         if current_user.guest? && (temp_name.blank? || temp_email.blank? || temp_phone_number.blank?)
             flash[:alert] = "名前、メールアドレス、電話番号を正しく入力してください。"
             render :new
             return
         end
-
+        
         if @reservation.save
-            current_user.update(name: temp_name, email: temp_email, phone_number: temp_phone_number)
+            current_user.update(name: temp_name, email: temp_email, phone_number: temp_phone_number) unless current_user.guest?
             flash[:notice] = '予約が完了しました。'
             redirect_to index_reservation_path 
         else
             flash[:alert] = '予約に失敗しました。もう一度やり直してください。'
             render :new
         end
+        
     end
 
     def confirm

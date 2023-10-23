@@ -15,4 +15,5 @@ mix.setPublicPath('public')
     .sass('app/assets/stylesheets/sass/app.scss', 'public/css/app.css')
     .js('app/javascript/app.js', 'public/js/app.js')
     .js('app/javascript/bootstrap.js', 'public/js/bootstrap.js')
-    .js('app/javascript/turbo.js', 'public/js/turbo.js');
+    .js('app/javascript/turbo.js', 'public/js/turbo.js')
+    .js('app/javascript/confirm-reservation.js', 'public/js/confirm-reservation.js');

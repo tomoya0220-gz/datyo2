@@ -63,6 +63,14 @@ class ReservationsController < ApplicationController
         render :confirm
     end
 
+    def destroy
+        @reservations = Reservation.find_by_id(params[:id])
+        if @reservations
+            @reservations.destroy
+            redirect_to confirm_reservation_path, notice: '予約をキャンセルしました。'
+        end
+    end
+
     private
     def reservation_params
         params.require(:reservation).permit(:date, :time_slot, :adults, :children, :note, :name, :email, :phone_number)

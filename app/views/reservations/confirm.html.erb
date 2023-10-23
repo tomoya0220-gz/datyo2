@@ -1,10 +1,16 @@
 <h2>予約内容</h2>
 
 <% @reservations.each do |reservation| %>
-        <p>日付: <%= reservation.date.strftime("%Y年%m月%d日") %> <%= reservation.time_slot %></p>
-        <p>大人の人数: <%= reservation.adults %></p>
-        <p>子供の人数：<%= reservation.children%></p>
-        <p>備考： <%= reservation.note%></p>
+        <div class="reservation-entry">
+                <p>日付: <%= reservation.date.strftime("%Y年%m月%d日") %> <%= reservation.time_slot %></p>
+                <p>大人の人数: <%= reservation.adults %></p>
+                <p>子供の人数：<%= reservation.children%></p>
+                <p>備考： <%= reservation.note%></p>
+
+                <p>予約ID: <%= reservation.id %></p>
+
+                <%= button_to "キャンセルする", destroy_reservation_path(reservation), method: :delete, data: { confirm: '本当にキャンセルしますか？' }, class: "delete-btn" %>
+        </div>
 <% end %>
 
 

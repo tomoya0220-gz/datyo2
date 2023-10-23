@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   devise_scope :user do
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
 
   get 'reservations/confirm', to:'reservations#confirm', as:'confirm_reservation'
 
-  get '/auth/:provider/callback', to: 'sessions#create', as:'create_session'
+  
   # Defines the root path route ("/")
   # root "articles#index"
 end

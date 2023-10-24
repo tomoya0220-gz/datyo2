@@ -15,12 +15,13 @@ Rails.application.routes.draw do
   get 'reservations/show/:date', to:'reservations#show', as:'show_reservation'
 
   get 'reservations/new/:date/:time_slot', to:'reservations#new', as:'new_reservation'
-  post 'reservations/new/:date/:time_slot', to: 'reservations#create', as: 'create_reservation'
+  post 'reservations/new/:date/:time_slot', to:'reservations#create', as:'create_reservation'
 
-  get 'reservations/confirm', to:'reservations#confirm', as: 'confirm_reservation'  
+  get 'reservations/confirm', to:'reservations#confirm', as:'confirm_reservation'  
+  delete 'reservations/confirm/destroy/:id', to:'reservations#destroy', as:'destroy_reservation'
   
-  delete 'reservations/confirm/destroy/:id', to: 'reservations#destroy', as: 'destroy_reservation'
-  
+  get 'users/show', to:'users#show', as:'show_user'
+  patch 'users/show', to:'users#update', as:'update_user'
 
   # Defines the root path route ("/")
   # root "articles#index"

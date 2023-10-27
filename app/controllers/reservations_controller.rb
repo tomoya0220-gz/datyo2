@@ -2,6 +2,7 @@ class ReservationsController < ApplicationController
     before_action :authenticate_user!
     before_action :validate_max_people_per_time_slot, only: [:create]
     before_action :total_people_count_within_limit, only: [:create]
+    before_action :ensure_authenticated_user!, only: [:confirm]
 
     def index
         #1ヶ月のカレンダー表示
@@ -109,4 +110,10 @@ class ReservationsController < ApplicationController
         end
     end
     
+    def ensure_authenticated_user!
+        if current_user&.guest?
+            redirect_to index_reservation_path, alert: 'ゲストユーザーはこのページにアクセスできません。'
+        end
+    end
+
 end

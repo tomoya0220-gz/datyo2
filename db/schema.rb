@@ -10,7 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_123011) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_03_115450) do
+  create_table "account_login_change_keys", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "login", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_otp_keys", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "num_failures", default: 0, null: false
+    t.datetime "last_use", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
+  end
+
+  create_table "account_password_reset_keys", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
+  end
+
+  create_table "account_recovery_codes", primary_key: ["id", "code"], charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.bigint "id", null: false
+    t.string "code", null: false
+  end
+
+  create_table "account_remember_keys", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_sms_codes", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "phone_number", null: false
+    t.integer "num_failures"
+    t.string "code"
+    t.datetime "code_issued_at", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
+  end
+
+  create_table "account_verification_keys", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
+  end
+
+  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
+    t.integer "status", default: 1, null: false
+    t.string "email", null: false
+    t.string "password_hash"
+    t.index ["email"], name: "index_accounts_on_email", unique: true
+  end
+
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_bin", force: :cascade do |t|
     t.date "date"
     t.string "time_slot"
@@ -44,5 +92,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_123011) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "account_login_change_keys", "accounts", column: "id"
+  add_foreign_key "account_otp_keys", "accounts", column: "id"
+  add_foreign_key "account_password_reset_keys", "accounts", column: "id"
+  add_foreign_key "account_recovery_codes", "accounts", column: "id"
+  add_foreign_key "account_remember_keys", "accounts", column: "id"
+  add_foreign_key "account_sms_codes", "accounts", column: "id"
+  add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "reservations", "users"
 end

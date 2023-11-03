@@ -22,4 +22,7 @@ class User < ApplicationRecord
   def guest?
     email == 'guest@example.com'
   end
+
 end
+
+

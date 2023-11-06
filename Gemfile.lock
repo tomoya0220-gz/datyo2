@@ -126,6 +126,7 @@ GEM
       activesupport (>= 5.0.0)
     json (2.6.3)
     jwt (2.7.1)
+    localhost (1.1.10)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -227,6 +228,9 @@ GEM
       sequel (>= 4)
     rodauth-model (0.2.1)
       rodauth (~> 2.0)
+    rodauth-omniauth (0.3.3)
+      omniauth (~> 2.0)
+      rodauth (~> 2.13)
     rodauth-rails (1.12.0)
       bcrypt
       railties (>= 5.0, < 8)
@@ -301,12 +305,14 @@ DEPENDENCIES
   dotenv-rails
   importmap-rails
   jbuilder
+  localhost (~> 1.1)
   mysql2
   omniauth
   omniauth-line
   omniauth-rails_csrf_protection
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rodauth-omniauth (~> 0.3.3)
   rodauth-rails (~> 1.12)
   selenium-webdriver
   sprockets-rails

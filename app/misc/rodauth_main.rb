@@ -4,16 +4,27 @@ class RodauthMain < Rodauth::Rails::Auth
   configure do
     # List of authentication features that are loaded.
     enable :create_account, :verify_account, :verify_account_grace_period,
-      :login, :logout, :remember,
-      :reset_password, :change_password, :change_password_notify,
-      :change_login, :verify_login_change, :close_account
+           :login, :logout, :remember,
+           :reset_password, :change_password, :change_password_notify,
+           :change_login, :verify_login_change, :close_account
+
+    enable :path_class_methods
+    create_account_route "register"
+    use_database_authentication_functions? true
+
+    enable :omniauth
+    omniauth_provider :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
+      {
+        scope: 'profile openid email'
+      }
+    
+    db Sequel.mysql2(extensions: :activerecord_connection, keep_reference: false)
 
     # See the Rodauth documentation for the list of available config options:
     # http://rodauth.jeremyevans.net/documentation.html
 
     # ==> General
     # Initialize Sequel and have it reuse Active Record's database connection.
-    db Sequel.mysql2(extensions: :activerecord_connection, keep_reference: false)
 
     # Change prefix of table and foreign key column names from default "account"
     # accounts_table :users
@@ -35,8 +46,7 @@ class RodauthMain < Rodauth::Rails::Auth
     # Make built-in page titles accessible in your views via an instance variable.
     title_instance_variable :@page_title
 
-    # Store account status in an integer column without foreign key constraint.
-    account_status_column :status
+    
 
     # Store password hash in a column instead of a separate table.
     account_password_hash_column :password_hash

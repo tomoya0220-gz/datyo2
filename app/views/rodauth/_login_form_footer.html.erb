@@ -1,0 +1,9 @@
+<% unless rodauth.login_form_footer_links.empty? %>
+  <%= rodauth.login_form_footer_links_heading %>
+
+  <ul>
+    <% line_login_url = "YOUR_LINE_LOGIN_URL_HERE" %>
+    <% line_login_text = "LINEでログイン" %>
+    <li><%= link_to line_login_text, line_login_url %></li>
+  </ul>
+<% end %>

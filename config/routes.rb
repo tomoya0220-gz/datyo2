@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'accounts/new'
+  get 'accounts/create'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }

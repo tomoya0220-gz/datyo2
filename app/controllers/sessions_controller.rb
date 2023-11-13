@@ -29,7 +29,21 @@ class SessionsController < ApplicationController
         session[:user_id] = user.id
 
         redirect_to index_reservation_path, notice: "ログインしました"
-        
+    end
+
+    def failure
+        # URLパラメータからエラー情報を取得
+        message = params[:message]
+        strategy = params[:strategy]
+        description = params[:description]
+
+        # エラー情報をログに記録するなどの処理をここに記述
+        # ...
+
+        # ユーザーにエラー情報を表示するためにビューに変数を渡す
+        @error_message = message
+        @strategy_name = strategy
+        @error_description = description
     end
     
 end

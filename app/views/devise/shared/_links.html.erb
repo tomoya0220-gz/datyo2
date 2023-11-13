@@ -18,13 +18,6 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
 
-<% if rodauth.logged_in? %>
-  <%= link_to "Sign out", rodauth.logout_path, method: :post %>
-<% else %>
-  <%= link_to "Sign in", rodauth.login_path %>
-  <%= link_to "Sign up", rodauth.create_account_path %>
-<% end %>
-
 <%= button_to 'ゲストログイン', users_guest_sign_in_path, method: :post %>
 
 <%= button_to "sign in with line", user_line_omniauth_authorize_path, method: :post %>

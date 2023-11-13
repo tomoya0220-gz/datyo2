@@ -50,8 +50,11 @@ gem 'devise'
 gem 'dotenv-rails'
 gem 'omniauth-line'
 gem 'omniauth-rails_csrf_protection'
-# gem 'rodauth'
 gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-oauth2'
+gem 'omniauth-yahoojp'
 # gem 'webpacker'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
@@ -80,9 +83,4 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
-
-gem "rodauth-rails", "~> 1.12"
-
-gem "rodauth-omniauth", "~> 0.3.3"
-
 gem "localhost", "~> 1.1", :group => :development

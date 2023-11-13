@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'accounts/new'
-  get 'accounts/create'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -11,6 +9,8 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
+  get '/auth/failure', to: 'sessions#failure', as:'failure_session'
+
   get '/', to:'reservations#index', as:'index_reservation'
 
   get 'reservations/show/:date', to:'reservations#show', as:'show_reservation'

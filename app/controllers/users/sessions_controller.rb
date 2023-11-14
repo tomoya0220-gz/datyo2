@@ -4,5 +4,6 @@ class Users::SessionsController < Devise::SessionsController
         sign_in user
         redirect_to index_reservation_path, notice: 'ゲストユーザーとしてログインしました。'
     end
-
+    
+    
 end

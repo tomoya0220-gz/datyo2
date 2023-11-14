@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in' , as: 'users_guest_sign_in'
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  get '/auth/:provider/callback', to: 'users/omniauth_callbacks#yahoojp', as:'get_callback'
+  post '/auth/:provider/callback', to: 'users/omniauth_callbacks#yahoojp', as:'post_callback'
   
   get '/auth/failure', to: 'sessions#failure', as:'failure_session'
 

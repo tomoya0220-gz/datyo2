@@ -305,9 +305,9 @@ Devise.setup do |config|
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
-  config.omniauth :Yahoo, ENV['Yahoo_API_KEY'], ENV['Yahoo_API_SECRET_KEY']
-  config.omniauth :FACEBOOK, ENV['FACEBOOK_API_KEY'], ENV['FACEBOOK_API_SECRET_KEY']
-  config.omniauth :GOOGLE, ENV['GOOGLE_API_KEY'], ENV['GOOGLE_API_SECRET_KEY']
+  config.omniauth :yahoojp, ENV['Yahoo_API_KEY'], ENV['Yahoo_API_SECRET_KEY']
+  config.omniauth :facebook, ENV['FACEBOOK_API_KEY'], ENV['FACEBOOK_API_SECRET_KEY']
+  config.omniauth :google_oauth2, ENV['GOOGLE_API_KEY'], ENV['GOOGLE_API_SECRET_KEY']
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
